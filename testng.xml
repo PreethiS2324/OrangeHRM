@@ -8,8 +8,8 @@
   <test thread-count="5" name="Test">
 	<parameter name="browser" value="Chrome"></parameter>
 	<classes>
-		<class name="testcases.TC001">
-		</class>
+		<class name="testcases.Login"></class>
+		<class name="testcases.PIM"></class>
 		
 	</classes>
   </test> <!-- Test -->

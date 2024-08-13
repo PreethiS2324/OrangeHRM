@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.time.Duration;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverUtils {
 
@@ -34,4 +38,10 @@ public class WebDriverUtils {
 	{
 		driver.manage().window().maximize();
 	}
+	
+	 public static WebElement waitForElementToBePresent(WebDriver driver, By locator, Duration timeout) {
+	        WebDriverWait wait = new WebDriverWait(driver, timeout);
+	        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	    }
+
 }

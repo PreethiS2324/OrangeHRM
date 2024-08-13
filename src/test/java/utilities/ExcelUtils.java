@@ -1,6 +1,7 @@
 package utilities;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,11 +17,25 @@ public class ExcelUtils {
 	public Sheet sheet;
 	public Row row;
 	public Cell cell;
-
+	private String filePath;
+	
+    public ExcelUtils(String filePath, String sheetName) throws IOException {
+        this.filePath = filePath;
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            this.workbook = new XSSFWorkbook(fis);
+            this.sheet = this.workbook.getSheet(sheetName);
+            if (this.sheet == null) {
+                throw new IllegalArgumentException("Sheet " + sheetName + " does not exist in the Excel file.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error initializing Excel file: " + e.getMessage());
+            throw e;
+        }
+    }
 	public int getRowCount(String sheetName) throws IOException
 	{
 		int rowCount = 0;
-		fis = new FileInputStream(IframeConstant.ExcelFilePath);
+		fis = new FileInputStream(filePath);
 		workbook = new XSSFWorkbook(fis);
 		sheet = workbook.getSheet(sheetName);
 		rowCount = sheet.getLastRowNum();
@@ -45,6 +60,7 @@ public class ExcelUtils {
 	
 	public String getCellData(String sheetName, int rowNumber, int columnNumber) throws IOException
 	{
+		System.out.println("SheetName: "+sheetName);
 		fis = new FileInputStream(IframeConstant.ExcelFilePath);
 		workbook = new XSSFWorkbook(fis);
 		sheet = workbook.getSheet(sheetName);

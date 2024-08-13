@@ -1,5 +1,6 @@
 package utilities;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -17,6 +18,11 @@ public class ITestListenerClass implements ITestListener{
 	ExtentReports report;
 	ExtentTest test;
 
+	private WebDriver driver;
+
+    public ITestListenerClass(WebDriver driver) {
+        this.driver = driver;
+    }
 	@Override
 	public void onStart(ITestContext context)
 	{
@@ -56,7 +62,7 @@ public class ITestListenerClass implements ITestListener{
 	    	String methodName = result.getMethod().getMethodName();
 	    	try
 	    	{
-	    		String path = WebDriverUtils.takescreenshot(BaseClass.staticdriver, methodName);
+	    		String path = WebDriverUtils.takescreenshot(driver, methodName);
 	    		test.addScreenCaptureFromPath(path);
 	    	}
 	    	catch(Exception e)
